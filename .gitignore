@@ -1,3 +1,5 @@
 .env
 node_modules
 ngrok.yml
+aiml/__pycache__/
+*.log

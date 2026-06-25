@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://raven-throwing-treadmill.ngrok-free.dev';
+const API_BASE_URL = 'https://drive-max-backend-bncp.onrender.com';
 const AI_BASE_URL = 'http://localhost:5001';
 
 export const getToken = () => localStorage.getItem('token');
