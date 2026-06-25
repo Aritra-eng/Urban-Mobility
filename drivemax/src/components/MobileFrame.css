@@ -1,0 +1,1242 @@
+/* ═══════════════════════════════════════════════════
+   MOBILE SIMULATOR — Phone Frame + Mobile Overrides
+   ═══════════════════════════════════════════════════ */
+
+/* ── Simulator Background ───────────────────────── */
+.mobile-simulator-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 40%, #16213e 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.mobile-simulator-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(37, 99, 235, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(124, 58, 237, 0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* ── Phone Frame ────────────────────────────────── */
+.phone-frame {
+  position: relative;
+  width: 350px;
+  height: min(812px, 92vh);
+  border-radius: 45px;
+  background: #000;
+  padding: 10px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 50px 80px rgba(0, 0, 0, 0.5),
+    0 0 120px rgba(37, 99, 235, 0.08),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  z-index: 1;
+  animation: phoneSlideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes phoneSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.85) translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Dynamic Island */
+.phone-notch {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 126px;
+  height: 36px;
+  background: #000;
+  border-radius: 20px;
+  z-index: 200;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* Home Indicator */
+.phone-home-indicator {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 134px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 3px;
+  z-index: 200;
+}
+
+/* Frame Content */
+.phone-frame-content {
+  width: 100%;
+  height: 100%;
+  border-radius: 32px;
+  overflow: hidden;
+  background: var(--background);
+  background-image: var(--gradient-mesh);
+  position: relative;
+  padding-top: 44px;
+  /* Clear the Dynamic Island */
+  box-sizing: border-box;
+}
+
+/* ── View Toggle Button (in Navbar) ─────────────── */
+.view-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  color: var(--muted-text);
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--border-color);
+  transition: all 0.25s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.view-toggle-btn:hover {
+  color: var(--primary);
+  background: white;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.12);
+  border-color: rgba(37, 99, 235, 0.3);
+}
+
+.view-toggle-btn.active {
+  color: white;
+  background: var(--primary);
+  border-color: var(--primary);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+}
+
+/* Tooltip */
+.view-toggle-btn::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1e293b;
+  color: white;
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.25rem 0.55rem;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.view-toggle-btn:hover::after {
+  opacity: 1;
+}
+
+/* ═══════════════════════════════════════════════════
+   MOBILE MODE OVERRIDES
+   Forces mobile layout via .mobile-mode class
+   ═══════════════════════════════════════════════════ */
+
+/* ── Layout / Global ────────────────────────────── */
+.mobile-mode {
+  position: relative;
+  overflow: hidden;
+  height: 100% !important;
+  min-height: 100% !important;
+  width: 100%;
+  max-width: 100%;
+}
+
+.mobile-mode .main-content {
+  margin-left: 0;
+  padding-bottom: 0;
+  height: 100% !important;
+  min-height: 100% !important;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.mobile-mode .main-content::-webkit-scrollbar {
+  display: none;
+}
+
+.mobile-mode .page-content {
+  padding: 1.25rem 1.25rem 90px;
+}
+
+.mobile-mode .glass-card {
+  border-radius: 16px;
+  padding: 1rem;
+  background: var(--surface);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.mobile-mode .glass-card:hover {
+  transform: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.mobile-mode .page-heading {
+  font-size: 1.25rem !important;
+}
+
+.mobile-mode .page-subheading {
+  font-size: 0.78rem !important;
+}
+
+/* ── Navbar in Mobile Mode ──────────────────────── */
+.mobile-mode .navbar {
+  padding: 0.4rem 0.75rem;
+  height: 48px;
+  position: sticky;
+  top: 0;
+}
+
+.mobile-mode .menu-btn {
+  display: flex;
+}
+
+.mobile-mode .navbar-right {
+  gap: 0.4rem;
+}
+
+.mobile-mode .status-pill {
+  padding: 0.25rem 0.5rem 0.25rem 0.45rem;
+  gap: 0.3rem;
+}
+
+.mobile-mode .status-label {
+  font-size: 0.65rem;
+}
+
+.mobile-mode .nav-icon-btn {
+  width: 30px;
+  height: 30px;
+}
+
+.mobile-mode .notif-dot {
+  top: 5px;
+  right: 5px;
+  width: 5px;
+  height: 5px;
+}
+
+.mobile-mode .profile-pill {
+  padding: 0.2rem;
+}
+
+.mobile-mode .profile-avatar-sm {
+  width: 26px;
+  height: 26px;
+}
+
+.mobile-mode .profile-name {
+  font-size: 0.75rem;
+}
+
+.mobile-mode .chevron {
+  width: 12px;
+  height: 12px;
+}
+
+.mobile-mode .view-toggle-btn {
+  width: 30px;
+  height: 30px;
+}
+
+/* ── Sidebar in Mobile Mode ─────────────────────── */
+.mobile-mode .sidebar {
+  position: absolute;
+  transform: translateX(-100%);
+  width: 240px;
+  height: 100%;
+  z-index: 50;
+}
+
+.mobile-mode .sidebar.open {
+  transform: translateX(0);
+}
+
+.mobile-mode .close-btn {
+  display: block;
+}
+
+.mobile-mode .sidebar-overlay {
+  display: block;
+  position: absolute;
+}
+
+.mobile-mode .sidebar-header {
+  padding: 1rem 1rem 0.65rem;
+}
+
+.mobile-mode .sidebar-logo-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.mobile-mode .sidebar-logo-text {
+  font-size: 0.92rem;
+}
+
+.mobile-mode .sidebar-nav {
+  padding: 0.75rem 0.45rem;
+}
+
+.mobile-mode .nav-item {
+  padding: 0.5rem 0.7rem;
+  font-size: 0.78rem;
+  gap: 0.65rem;
+}
+
+.mobile-mode .nav-section-label {
+  font-size: 0.55rem;
+  padding: 0 0.65rem;
+}
+
+.mobile-mode .sidebar-footer {
+  padding: 0.6rem 0.45rem 1rem;
+}
+
+/* ── Dashboard ──────────────────────────────────── */
+.mobile-mode .dashboard {
+  gap: 1.5rem;
+}
+
+.mobile-mode .dash-hero {
+  padding: 1rem;
+  border-radius: var(--radius-md);
+}
+
+.mobile-mode .hero-content {
+  gap: 1rem;
+}
+
+.mobile-mode .hero-greeting {
+  font-size: 0.72rem;
+}
+
+.mobile-mode .hero-name {
+  font-size: 1.1rem;
+}
+
+.mobile-mode .hero-sub {
+  font-size: 0.72rem;
+}
+
+.mobile-mode .hero-earnings {
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  border-radius: var(--radius-sm);
+}
+
+.mobile-mode .earning-divider {
+  width: 1px;
+  height: 40px;
+}
+
+.mobile-mode .earning-amount {
+  font-size: 1.3rem;
+}
+
+.mobile-mode .earning-label {
+  font-size: 0.62rem;
+}
+
+.mobile-mode .earning-trend {
+  font-size: 0.68rem;
+}
+
+.mobile-mode .earning-sub {
+  font-size: 0.68rem;
+}
+
+.mobile-mode .stats-section {
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.mobile-mode .stat-card {
+  padding: 0.65rem 0.75rem;
+  gap: 0.5rem;
+  border-radius: var(--radius-sm);
+}
+
+.mobile-mode .stat-card:hover {
+  transform: none;
+}
+
+.mobile-mode .stat-icon-wrap {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-xs);
+}
+
+.mobile-mode .stat-value {
+  font-size: 0.95rem;
+}
+
+.mobile-mode .stat-label {
+  font-size: 0.62rem;
+}
+
+.mobile-mode .stat-badge {
+  font-size: 0.58rem;
+  padding: 0.1rem 0.35rem;
+}
+
+.mobile-mode .charts-row {
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+.mobile-mode .chart-card {
+  padding: 0.85rem;
+}
+
+.mobile-mode .chart-header {
+  margin-bottom: 0.75rem;
+}
+
+.mobile-mode .chart-title {
+  font-size: 0.82rem;
+}
+
+.mobile-mode .chart-subtitle {
+  font-size: 0.65rem;
+}
+
+.mobile-mode .chart-body {
+  height: 160px;
+}
+
+.mobile-mode .chart-select {
+  font-size: 0.65rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.mobile-mode .section-title {
+  font-size: 0.88rem;
+  margin-bottom: 0.6rem;
+}
+
+.mobile-mode .actions-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mobile-mode .action-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  gap: 0.2rem 1rem;
+  text-align: left;
+  border-radius: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.mobile-mode .action-card:hover {
+  transform: none;
+  background: var(--surface);
+}
+
+.mobile-mode .action-icon-wrap {
+  grid-row: 1 / 3;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-xs);
+}
+
+.mobile-mode .action-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.mobile-mode .action-desc {
+  font-size: 0.65rem;
+  color: var(--muted-text);
+}
+
+/* ── Profile ────────────────────────────────────── */
+.mobile-mode .profile-page {
+  max-width: 100%;
+}
+
+.mobile-mode .profile-layout {
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.mobile-mode .profile-cover {
+  height: 60px;
+}
+
+.mobile-mode .profile-body {
+  padding: 0 0.75rem 1rem;
+  margin-top: -28px;
+}
+
+.mobile-mode .avatar-img {
+  width: 52px;
+  height: 52px;
+  border-width: 3px;
+}
+
+.mobile-mode .avatar-edit {
+  width: 22px;
+  height: 22px;
+}
+
+.mobile-mode .driver-name {
+  font-size: 0.95rem;
+}
+
+.mobile-mode .driver-tier {
+  font-size: 0.68rem;
+}
+
+.mobile-mode .rating-pill {
+  padding: 0.2rem 0.5rem;
+}
+
+.mobile-mode .rating-number {
+  font-size: 0.75rem;
+}
+
+.mobile-mode .rating-rides {
+  font-size: 0.65rem;
+}
+
+.mobile-mode .badge-item {
+  font-size: 0.6rem;
+  padding: 0.2rem 0.45rem;
+}
+
+.mobile-mode .vehicle-card {
+  padding: 0.85rem;
+}
+
+.mobile-mode .vehicle-name {
+  font-size: 0.85rem;
+}
+
+.mobile-mode .vehicle-meta {
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.mobile-mode .section-header {
+  padding: 0.85rem 1rem 0.6rem;
+}
+
+.mobile-mode .section-header h3 {
+  font-size: 0.85rem;
+}
+
+.mobile-mode .section-header p {
+  font-size: 0.65rem;
+}
+
+.mobile-mode .settings-row {
+  padding: 0.55rem 0.85rem;
+}
+
+.mobile-mode .settings-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.mobile-mode .settings-name {
+  font-size: 0.78rem;
+}
+
+.mobile-mode .settings-sub {
+  font-size: 0.62rem;
+}
+
+.mobile-mode .card-title {
+  font-size: 0.82rem;
+}
+
+.mobile-mode .verify-left {
+  font-size: 0.72rem;
+  gap: 0.4rem;
+}
+
+.mobile-mode .verify-status {
+  font-size: 0.62rem;
+  padding: 0.12rem 0.4rem;
+}
+
+.mobile-mode .logout-btn {
+  padding: 0.6rem;
+  font-size: 0.78rem;
+}
+
+/* ── Go Online ──────────────────────────────────── */
+.mobile-mode .go-online-page {
+  gap: 1.5rem;
+}
+
+.mobile-mode .go-online-header {
+  flex-wrap: wrap;
+}
+
+.mobile-mode .toggle-card {
+  padding: 1rem 0.85rem;
+  border-radius: var(--radius-md);
+}
+
+.mobile-mode .toggle-content {
+  flex-direction: column;
+  text-align: center;
+  gap: 1rem;
+}
+
+.mobile-mode .toggle-left {
+  flex-direction: column;
+}
+
+.mobile-mode .toggle-right {
+  flex-direction: column;
+}
+
+.mobile-mode .status-indicator {
+  width: 40px;
+  height: 40px;
+}
+
+.mobile-mode .status-text h2 {
+  font-size: 1.05rem;
+}
+
+.mobile-mode .status-text p {
+  font-size: 0.72rem;
+}
+
+.mobile-mode .power-btn {
+  width: 52px;
+  height: 52px;
+}
+
+.mobile-mode .timer-value {
+  font-size: 1.05rem;
+}
+
+.mobile-mode .live-stats {
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.mobile-mode .live-stat-card {
+  padding: 0.65rem 0.75rem !important;
+  gap: 0.5rem;
+}
+
+.mobile-mode .live-stat-card:hover {
+  transform: none;
+}
+
+.mobile-mode .live-stat-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.mobile-mode .live-stat-value {
+  font-size: 0.92rem;
+}
+
+.mobile-mode .live-stat-label {
+  font-size: 0.65rem;
+}
+
+.mobile-mode .go-online-columns {
+  grid-template-columns: 1fr;
+}
+
+.mobile-mode .connection-badge {
+  font-size: 0.65rem;
+  padding: 0.25rem 0.6rem;
+}
+
+.mobile-mode .zone-card {
+  padding: 0.6rem 0.7rem !important;
+}
+
+.mobile-mode .zone-card:hover {
+  transform: none;
+}
+
+.mobile-mode .zone-heat {
+  width: 30px;
+  height: 30px;
+}
+
+.mobile-mode .zone-name {
+  font-size: 0.78rem;
+}
+
+.mobile-mode .zone-demand {
+  font-size: 0.6rem;
+}
+
+.mobile-mode .zone-surge {
+  font-size: 0.6rem;
+  padding: 0.12rem 0.4rem;
+}
+
+.mobile-mode .zone-riders {
+  font-size: 0.6rem;
+}
+
+.mobile-mode .request-card {
+  padding: 0.7rem 0.8rem !important;
+}
+
+.mobile-mode .request-card:hover {
+  transform: none;
+}
+
+.mobile-mode .req-location {
+  font-size: 0.75rem;
+}
+
+.mobile-mode .req-fare {
+  font-size: 0.85rem;
+}
+
+.mobile-mode .req-distance,
+.mobile-mode .req-time {
+  font-size: 0.65rem;
+}
+
+/* ── Fuel Stations ──────────────────────────────── */
+.mobile-mode .fuel-page {
+  gap: 1.5rem;
+}
+
+.mobile-mode .fuel-summary {
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.mobile-mode .fuel-summary-card {
+  padding: 0.65rem 0.75rem !important;
+  gap: 0.5rem;
+}
+
+.mobile-mode .fuel-summary-card:hover {
+  transform: none;
+}
+
+.mobile-mode .summary-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.mobile-mode .summary-value {
+  font-size: 0.95rem;
+}
+
+.mobile-mode .summary-label {
+  font-size: 0.62rem;
+}
+
+.mobile-mode .summary-sub {
+  font-size: 0.58rem;
+}
+
+.mobile-mode .fuel-filters {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.65rem 0.75rem !important;
+}
+
+.mobile-mode .fuel-filters:hover {
+  transform: none;
+}
+
+.mobile-mode .filter-label {
+  font-size: 0.68rem;
+}
+
+.mobile-mode .filter-pill {
+  font-size: 0.62rem;
+  padding: 0.2rem 0.5rem;
+}
+
+.mobile-mode .station-card {
+  border-radius: var(--radius-sm);
+}
+
+.mobile-mode .station-card:hover {
+  transform: none;
+}
+
+.mobile-mode .station-name {
+  font-size: 0.82rem;
+}
+
+.mobile-mode .station-address {
+  font-size: 0.65rem;
+}
+
+.mobile-mode .brand-badge {
+  width: 34px;
+  height: 34px;
+}
+
+.mobile-mode .station-prices {
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-start;
+  padding: 0.55rem 0.75rem;
+}
+
+.mobile-mode .price-divider {
+  width: 100%;
+  height: 1px;
+}
+
+.mobile-mode .price-value {
+  font-size: 1rem;
+}
+
+.mobile-mode .price-type {
+  font-size: 0.58rem;
+}
+
+.mobile-mode .station-bottom {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+}
+
+.mobile-mode .station-metas {
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.mobile-mode .station-meta-item {
+  font-size: 0.65rem;
+}
+
+.mobile-mode .amenity-tag {
+  font-size: 0.55rem;
+  padding: 0.12rem 0.35rem;
+}
+
+.mobile-mode .navigate-btn {
+  padding: 0.55rem;
+  font-size: 0.72rem;
+  margin-top: 0.55rem;
+  border-radius: var(--radius-sm);
+}
+
+.mobile-mode .savings-ribbon {
+  font-size: 0.55rem;
+  padding: 0.15rem 0.45rem;
+}
+
+.mobile-mode .open-badge {
+  font-size: 0.58rem;
+  padding: 0.15rem 0.45rem;
+}
+
+/* ── Wallet ─────────────────────────────────────── */
+.mobile-mode .wallet-page {
+  max-width: 100%;
+  gap: 1.5rem;
+}
+
+.mobile-mode .balance-grid {
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+.mobile-mode .primary-balance-card {
+  padding: 1rem;
+  border-radius: var(--radius-md);
+}
+
+.mobile-mode .balance-amount {
+  font-size: 1.65rem;
+  letter-spacing: -1px;
+  margin-bottom: 1rem;
+}
+
+.mobile-mode .balance-label {
+  font-size: 0.65rem;
+}
+
+.mobile-mode .balance-chip {
+  width: 32px;
+  height: 32px;
+}
+
+.mobile-mode .balance-top {
+  margin-bottom: 1rem;
+}
+
+.mobile-mode .balance-actions {
+  gap: 0.4rem;
+  flex-direction: column;
+}
+
+.mobile-mode .withdraw-btn,
+.mobile-mode .bank-btn {
+  padding: 0.55rem;
+  font-size: 0.72rem;
+  border-radius: var(--radius-xs);
+}
+
+.mobile-mode .secondary-cards {
+  flex-direction: row;
+  overflow-x: auto;
+  gap: 0.5rem;
+}
+
+.mobile-mode .info-card {
+  min-width: 145px;
+  padding: 0.65rem 0.75rem;
+  gap: 0.5rem;
+}
+
+.mobile-mode .info-card:hover {
+  transform: none;
+}
+
+.mobile-mode .info-icon-wrap {
+  width: 30px;
+  height: 30px;
+}
+
+.mobile-mode .info-value {
+  font-size: 0.95rem;
+}
+
+.mobile-mode .info-label {
+  font-size: 0.62rem;
+}
+
+.mobile-mode .tx-header {
+  padding: 0.75rem 0.85rem;
+}
+
+.mobile-mode .tx-title {
+  font-size: 0.85rem;
+}
+
+.mobile-mode .view-all-btn {
+  font-size: 0.65rem;
+}
+
+.mobile-mode .tx-row {
+  padding: 0.6rem 0.75rem;
+}
+
+.mobile-mode .tx-icon-wrap {
+  width: 30px;
+  height: 30px;
+}
+
+.mobile-mode .tx-left {
+  gap: 0.5rem;
+}
+
+.mobile-mode .tx-type {
+  font-size: 0.78rem;
+}
+
+.mobile-mode .tx-desc {
+  font-size: 0.62rem;
+}
+
+.mobile-mode .tx-amount {
+  font-size: 0.78rem;
+}
+
+.mobile-mode .tx-meta {
+  font-size: 0.58rem;
+}
+
+.mobile-mode .download-btn {
+  padding: 0.35rem 0.6rem;
+  font-size: 0.72rem;
+}
+
+/* ── Ride Suggestions ───────────────────────────── */
+.mobile-mode .suggestions-page {
+  max-width: 100%;
+  gap: 1.5rem;
+}
+
+.mobile-mode .suggestions-header {
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mobile-mode .scanner-badge {
+  font-size: 0.72rem;
+  padding: 0.35rem 0.75rem;
+}
+
+.mobile-mode .prediction-panel {
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mobile-mode .prediction-panel:hover {
+  transform: none;
+}
+
+.mobile-mode .prediction-icon {
+  width: 34px;
+  height: 34px;
+}
+
+.mobile-mode .prediction-text h3 {
+  font-size: 0.82rem;
+}
+
+.mobile-mode .prediction-text p {
+  font-size: 0.72rem;
+}
+
+.mobile-mode .map-btn {
+  width: 100%;
+  justify-content: center;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.72rem;
+}
+
+.mobile-mode .ride-card {
+  border-radius: var(--radius-sm);
+}
+
+.mobile-mode .ride-card:hover {
+  transform: none;
+}
+
+.mobile-mode .ride-top {
+  margin-bottom: 0.75rem;
+}
+
+.mobile-mode .route-name {
+  font-size: 0.78rem;
+}
+
+.mobile-mode .route-type {
+  font-size: 0.5rem;
+}
+
+.mobile-mode .fare-amount {
+  font-size: 1.15rem;
+}
+
+.mobile-mode .surge-tag {
+  font-size: 0.6rem;
+  padding: 0.12rem 0.4rem;
+}
+
+.mobile-mode .ride-metrics {
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+  padding: 0.6rem;
+  margin-bottom: 0.75rem;
+}
+
+.mobile-mode .metric {
+  gap: 0.35rem;
+}
+
+.mobile-mode .metric-val {
+  font-size: 0.72rem;
+}
+
+.mobile-mode .metric-lbl {
+  font-size: 0.55rem;
+}
+
+.mobile-mode .ride-bottom {
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+
+.mobile-mode .ride-tags {
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.mobile-mode .tag {
+  font-size: 0.58rem;
+  padding: 0.15rem 0.45rem;
+}
+
+.mobile-mode .accept-btn {
+  justify-content: center;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.72rem;
+}
+
+.mobile-mode .rec-ribbon {
+  font-size: 0.55rem;
+  padding: 0.2rem 0.55rem;
+}
+
+/* ── Settings Pages ─────────────────────────────── */
+.mobile-mode .settings-page {
+  max-width: 100%;
+  gap: 1.5rem;
+}
+
+.mobile-mode .settings-page-header {
+  gap: 0.6rem;
+}
+
+.mobile-mode .back-btn {
+  width: 32px;
+  height: 32px;
+}
+
+.mobile-mode .sp-section-title {
+  font-size: 0.85rem;
+}
+
+.mobile-mode .sp-row {
+  padding: 0.6rem 0.75rem;
+}
+
+.mobile-mode .sp-row-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.mobile-mode .sp-row-name {
+  font-size: 0.75rem;
+}
+
+.mobile-mode .sp-row-desc {
+  font-size: 0.6rem;
+}
+
+.mobile-mode .sp-row-left {
+  gap: 0.55rem;
+}
+
+.mobile-mode .toggle-switch {
+  width: 40px;
+  height: 22px;
+}
+
+.mobile-mode .toggle-slider::before {
+  width: 16px;
+  height: 16px;
+}
+
+.mobile-mode .toggle-switch input:checked+.toggle-slider::before {
+  transform: translateX(18px);
+}
+
+.mobile-mode .sp-select {
+  font-size: 0.68rem;
+  padding: 0.3rem 0.6rem;
+}
+
+.mobile-mode .sp-badge {
+  font-size: 0.58rem;
+  padding: 0.15rem 0.45rem;
+}
+
+.mobile-mode .doc-card-header {
+  padding: 0.75rem 0.85rem;
+}
+
+.mobile-mode .doc-card-title h4 {
+  font-size: 0.82rem;
+}
+
+.mobile-mode .doc-card-body {
+  padding: 0.75rem 0.85rem;
+}
+
+.mobile-mode .doc-detail-grid {
+  grid-template-columns: 1fr;
+  gap: 0.55rem;
+}
+
+.mobile-mode .doc-detail-label {
+  font-size: 0.55rem;
+}
+
+.mobile-mode .doc-detail-value {
+  font-size: 0.75rem;
+}
+
+.mobile-mode .doc-card-footer {
+  flex-direction: column;
+  padding: 0.55rem 0.85rem;
+  gap: 0.4rem;
+}
+
+.mobile-mode .doc-btn {
+  font-size: 0.65rem;
+  padding: 0.4rem 0.7rem;
+  justify-content: center;
+}
+
+.mobile-mode .sp-banner {
+  padding: 0.6rem 0.75rem;
+  gap: 0.5rem;
+}
+
+.mobile-mode .sp-banner-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.mobile-mode .sp-banner-text strong {
+  font-size: 0.72rem;
+}
+
+.mobile-mode .sp-banner-text span {
+  font-size: 0.62rem;
+}
+
+.mobile-mode .sp-action-btn {
+  padding: 0.6rem;
+  font-size: 0.75rem;
+}
